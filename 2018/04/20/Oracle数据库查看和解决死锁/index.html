@@ -100,7 +100,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Oracle,ORACLE,死锁,解决死锁," />
 
 
 
@@ -111,15 +111,28 @@
 
 
 
-<meta name="description" content="国家二级退堂鼓演奏家">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Gangdan' Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="死锁的概念
+
+所谓死锁，是指两个会话，每个会话都持有另外一个会话想要的资源，因争夺资源而造成的一种互相等待的现象，此时就会出现死锁，若无外力作用，它们都将无法推进下去。此时称系统处于死锁状态或系统产生了死锁，这些永远在互相等待的进程称为死锁进程。Oracle对于“死锁”采取的策略是回滚其中一个事务，让另外一个事务顺利进行。
+
+查看死锁12345678910SELECT SESS.SID,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle数据库查看和解决死锁">
+<meta property="og:url" content="http://yoursite.com/2018/04/20/Oracle数据库查看和解决死锁/index.html">
 <meta property="og:site_name" content="Gangdan' Blog">
-<meta property="og:description" content="国家二级退堂鼓演奏家">
+<meta property="og:description" content="死锁的概念
+
+所谓死锁，是指两个会话，每个会话都持有另外一个会话想要的资源，因争夺资源而造成的一种互相等待的现象，此时就会出现死锁，若无外力作用，它们都将无法推进下去。此时称系统处于死锁状态或系统产生了死锁，这些永远在互相等待的进程称为死锁进程。Oracle对于“死锁”采取的策略是回滚其中一个事务，让另外一个事务顺利进行。
+
+查看死锁12345678910SELECT SESS.SID,">
+<meta property="og:updated_time" content="2018-04-20T09:25:20.388Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gangdan' Blog">
-<meta name="twitter:description" content="国家二级退堂鼓演奏家">
+<meta name="twitter:title" content="Oracle数据库查看和解决死锁">
+<meta name="twitter:description" content="死锁的概念
+
+所谓死锁，是指两个会话，每个会话都持有另外一个会话想要的资源，因争夺资源而造成的一种互相等待的现象，此时就会出现死锁，若无外力作用，它们都将无法推进下去。此时称系统处于死锁状态或系统产生了死锁，这些永远在互相等待的进程称为死锁进程。Oracle对于“死锁”采取的策略是回滚其中一个事务，让另外一个事务顺利进行。
+
+查看死锁12345678910SELECT SESS.SID,">
 
 
 
@@ -149,13 +162,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/20/Oracle数据库查看和解决死锁/"/>
 
 
 
 
 
-  <title>Gangdan' Blog</title>
+  <title>Oracle数据库查看和解决死锁 | Gangdan' Blog</title>
   
 
 
@@ -174,8 +187,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -302,9 +314,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -334,9 +346,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/20/Oracle数据库查看和解决死锁/" itemprop="url">Oracle数据库查看和解决死锁</a></h1>
+          <h1 class="post-title" itemprop="name headline">Oracle数据库查看和解决死锁</h1>
         
 
         <div class="post-meta">
@@ -408,20 +418,53 @@
       
 
       
-        
-          
-          死锁的概念
+        <h1 id="死锁的概念"><a href="#死锁的概念" class="headerlink" title="死锁的概念"></a>死锁的概念</h1><p><br></p>
+<blockquote>
+<p>所谓死锁，是指两个会话，每个会话都持有另外一个会话想要的资源，因争夺资源而造成的一种互相等待的现象，此时就会出现死锁，若无外力作用，它们都将无法推进下去。此时称系统处于死锁状态或系统产生了死锁，这些永远在互相等待的进程称为死锁进程。Oracle对于“死锁”采取的策略是回滚其中一个事务，让另外一个事务顺利进行。</p>
+</blockquote>
+<h1 id="查看死锁"><a href="#查看死锁" class="headerlink" title="查看死锁"></a>查看死锁</h1><p><br><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> SESS.SID,</div><div class="line">       SESS.SERIAL#,</div><div class="line">       LO.ORACLE_USERNAME,</div><div class="line">       LO.OS_USER_NAME,</div><div class="line">       AO.OBJECT_NAME,</div><div class="line">       LO.LOCKED_MODE,</div><div class="line">       SESS.MACHINE</div><div class="line">  <span class="keyword">FROM</span> V$LOCKED_OBJECT LO, DBA_OBJECTS AO, V$<span class="keyword">SESSION</span> SESS</div><div class="line"> <span class="keyword">WHERE</span> AO.OBJECT_ID = LO.OBJECT_ID</div><div class="line">   <span class="keyword">AND</span> LO.SESSION_ID = SESS.SID;</div></pre></td></tr></table></figure></p>
+<h2 id="ORACLE里锁有以下几种模式"><a href="#ORACLE里锁有以下几种模式" class="headerlink" title="ORACLE里锁有以下几种模式:"></a>ORACLE里锁有以下几种模式:</h2><ul>
+<li>0：none</li>
+</ul>
+<ul>
+<li>1：null 空</li>
+</ul>
+<ul>
+<li>2：Row-S 行共享(RS)：共享表锁，sub share </li>
+</ul>
+<ul>
+<li>3：Row-X 行独占(RX)：用于行的修改，sub exclusive </li>
+</ul>
+<ul>
+<li>4：Share 共享锁(S)：阻止其他DML操作，share</li>
+</ul>
+<ul>
+<li>5：S/Row-X 共享行独占(SRX)：阻止其他事务操作，share/sub exclusive </li>
+</ul>
+<ul>
+<li>6：exclusive 独占(X)：独立访问使用，exclusive</li>
+</ul>
+<p>数字越大锁级别越高, 影响的操作越多。</p>
+<ul>
+<li>1级锁有：Select，有时会在v$locked_object出现。</li>
+</ul>
+<ul>
+<li>2级锁有：Select for update,Lock For Update,Lock Row Share<br>select for update当对话使用for update子串打开一个游标时，所有返回集中的数据行都将处于行级(Row-X)独占式锁定，其他对象只能查询这些数据行，不能进行update、delete或select for update操作。</li>
+</ul>
+<ul>
+<li>3级锁有：Insert, Update, Delete, Lock Row Exclusive<br>没有commit之前插入同样的一条记录会没有反应, 因为后一个3的锁会一直等待上一个3的锁, 我们必须释放掉上一个才能继续工作。</li>
+</ul>
+<ul>
+<li>4级锁有：Create Index, Lock Share<br>locked_mode为2,3,4不影响DML(insert,delete,update,select)操作, 但DDL(alter,drop等)操作会提示ora-00054错误。<br>00054, 00000, “resource busy and acquire with NOWAIT specified”<br>// <em>Cause: Resource interested is busy.<br>// </em>Action: Retry if necessary.</li>
+</ul>
+<ul>
+<li>5级锁有：Lock Share Row Exclusive<br>具体来讲有主外键约束时update / delete … ; 可能会产生4,5的锁。</li>
+</ul>
+<ul>
+<li>6级锁有：Alter table, Drop table, Drop Index, Truncate table, Lock Exclusive</li>
+</ul>
+<h1 id="解决死锁"><a href="#解决死锁" class="headerlink" title="解决死锁"></a>解决死锁</h1><p><br><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> <span class="keyword">SYSTEM</span> <span class="keyword">KILL</span> <span class="keyword">SESSION</span> <span class="string">'前SQL语句的SID'</span>,<span class="string">'前SQL语句的SERIAL#'</span></div></pre></td></tr></table></figure></p>
 
-所谓死锁，是指两个会话，每个会话都持有另外一个会话想要的资源，因争夺资源而造成的一种互相等待的现象，此时就会出现死锁，若无外力作用，它们都将无法推进下去。此时称系统处于死锁状态或系统产生了死锁，这些永远在互相等待的进程称为死锁进程。Oracle对于“死锁”采取的策略是回滚其中一个事务，
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/20/Oracle数据库查看和解决死锁/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
       
     </div>
     
@@ -436,140 +479,42 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/10/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Wang Gangdan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://s1.ax1x.com/2018/04/15/CeCf3T.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gangdan' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/10/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-10T10:09:54+08:00">
-                2018-04-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/Oracle/" rel="tag"># Oracle</a>
           
-            
+            <a href="/tags/ORACLE/" rel="tag"># ORACLE</a>
           
-
+            <a href="/tags/死锁/" rel="tag"># 死锁</a>
           
+            <a href="/tags/解决死锁/" rel="tag"># 解决死锁</a>
           
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          
-          博客第一篇：Hello World祭天12345public class HelloWorld &#123;   	public static void main(String[] args) &#123;	System.out.println("Hello World!");    &#125;&
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/10/hello-world/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/10/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
 
-    
+          <span class="post-nav-divider"></span>
 
-    
-
-    
-
-    <footer class="post-footer">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -579,10 +524,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -590,6 +536,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -610,8 +560,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -731,6 +690,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#死锁的概念"><span class="nav-number">1.</span> <span class="nav-text">死锁的概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看死锁"><span class="nav-number">2.</span> <span class="nav-text">查看死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ORACLE里锁有以下几种模式"><span class="nav-number">2.1.</span> <span class="nav-text">ORACLE里锁有以下几种模式:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决死锁"><span class="nav-number">3.</span> <span class="nav-text">解决死锁</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -871,6 +846,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
