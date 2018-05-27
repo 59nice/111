@@ -16,7 +16,7 @@
   </entry>
   <entry>
     <title><![CDATA[Hello World]]></title>
-    <url>%2F2018%2F04%2F10%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[博客第一篇：Hello World祭天12345public class HelloWorld &#123; public static void main(String[] args) &#123; System.out.println("Hello World!"); &#125;&#125;]]></content>
+    <url>%2F2018%2F04%2F20%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[博客第一篇：Hello World祭天 为什么称第一个程序为“Hello Wolrd”呢？其实计算机行业里面，学习任何技术的第一个程序都可以称为“Hello World”。“Hello World”的字面意思是“你好，世界”，也就是跟世界打招呼。我们第一个程序在这世界上诞生了，那肯定要跟世界打声招呼嘛，所以就称为“Hello World”。 Java12345public class HelloWorld &#123; public static void main(String[] args) &#123; System.out.println("Hello World!"); &#125;&#125; Oracle12345CREATE OR REPLACE PROCEDURE proc_helloworldISBEGIN DBMS_OUTPUT.put_line ('Hello World!');END; javascript12345&lt;script type="text/javascript"&gt; alert("这是我的第一行JS代码"); document.write("看我出不出来"); console.log("你猜我在哪里出来呢");&lt;/script&gt;]]></content>
   </entry>
 </search>
