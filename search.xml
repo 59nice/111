@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2018%2F04%2F20%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[博客第一篇：Hello World祭天 为什么称第一个程序为“Hello Wolrd”呢？其实计算机行业里面，学习任何技术的第一个程序都可以称为“Hello World”。“Hello World”的字面意思是“你好，世界”，也就是跟世界打招呼。我们第一个程序在这世界上诞生了，那肯定要跟世界打声招呼嘛，所以就称为“Hello World”。 Java12345public class HelloWorld &#123; public static void main(String[] args) &#123; System.out.println("Hello World!"); &#125;&#125; Oracle12345CREATE OR REPLACE PROCEDURE proc_helloworldISBEGIN DBMS_OUTPUT.put_line ('Hello World!');END; javascript12345&lt;script type="text/javascript"&gt; alert("Hello World!"); document.write("Hello World!"); console.log("Hello World!");&lt;/script&gt;]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[Oracle数据库查看和解决死锁]]></title>
     <url>%2F2018%2F04%2F20%2FOracle%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9F%A5%E7%9C%8B%E5%92%8C%E8%A7%A3%E5%86%B3%E6%AD%BB%E9%94%81%2F</url>
     <content type="text"><![CDATA[死锁的概念 所谓死锁，是指两个会话，每个会话都持有另外一个会话想要的资源，因争夺资源而造成的一种互相等待的现象，此时就会出现死锁，若无外力作用，它们都将无法推进下去。此时称系统处于死锁状态或系统产生了死锁，这些永远在互相等待的进程称为死锁进程。Oracle对于“死锁”采取的策略是回滚其中一个事务，让另外一个事务顺利进行。 查看死锁12345678910SELECT SESS.SID, SESS.SERIAL#, LO.ORACLE_USERNAME, LO.OS_USER_NAME, AO.OBJECT_NAME, LO.LOCKED_MODE, SESS.MACHINE FROM V$LOCKED_OBJECT LO, DBA_OBJECTS AO, V$SESSION SESS WHERE AO.OBJECT_ID = LO.OBJECT_ID AND LO.SESSION_ID = SESS.SID; ORACLE里锁有以下几种模式: 0：none 1：null 空 2：Row-S 行共享(RS)：共享表锁，sub share 3：Row-X 行独占(RX)：用于行的修改，sub exclusive 4：Share 共享锁(S)：阻止其他DML操作，share 5：S/Row-X 共享行独占(SRX)：阻止其他事务操作，share/sub exclusive 6：exclusive 独占(X)：独立访问使用，exclusive 数字越大锁级别越高, 影响的操作越多。 1级锁有：Select，有时会在v$locked_object出现。 2级锁有：Select for update,Lock For Update,Lock Row Shareselect for update当对话使用for update子串打开一个游标时，所有返回集中的数据行都将处于行级(Row-X)独占式锁定，其他对象只能查询这些数据行，不能进行update、delete或select for update操作。 3级锁有：Insert, Update, Delete, Lock Row Exclusive没有commit之前插入同样的一条记录会没有反应, 因为后一个3的锁会一直等待上一个3的锁, 我们必须释放掉上一个才能继续工作。 4级锁有：Create Index, Lock Sharelocked_mode为2,3,4不影响DML(insert,delete,update,select)操作, 但DDL(alter,drop等)操作会提示ora-00054错误。00054, 00000, “resource busy and acquire with NOWAIT specified”// Cause: Resource interested is busy.// Action: Retry if necessary. 5级锁有：Lock Share Row Exclusive具体来讲有主外键约束时update / delete … ; 可能会产生4,5的锁。 6级锁有：Alter table, Drop table, Drop Index, Truncate table, Lock Exclusive 解决死锁1ALTER SYSTEM KILL SESSION '前SQL语句的SID','前SQL语句的SERIAL#']]></content>
@@ -13,10 +18,5 @@
         <tag>死锁</tag>
         <tag>解决死锁</tag>
       </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2018%2F04%2F20%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[博客第一篇：Hello World祭天 为什么称第一个程序为“Hello Wolrd”呢？其实计算机行业里面，学习任何技术的第一个程序都可以称为“Hello World”。“Hello World”的字面意思是“你好，世界”，也就是跟世界打招呼。我们第一个程序在这世界上诞生了，那肯定要跟世界打声招呼嘛，所以就称为“Hello World”。 Java12345public class HelloWorld &#123; public static void main(String[] args) &#123; System.out.println("Hello World!"); &#125;&#125; Oracle12345CREATE OR REPLACE PROCEDURE proc_helloworldISBEGIN DBMS_OUTPUT.put_line ('Hello World!');END; javascript12345&lt;script type="text/javascript"&gt; alert("这是我的第一行JS代码"); document.write("看我出不出来"); console.log("你猜我在哪里出来呢");&lt;/script&gt;]]></content>
   </entry>
 </search>
